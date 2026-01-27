@@ -23,6 +23,14 @@ resource "aws_vpc_security_group_ingress_rule" "allow_9000_ipv4_sonaq" {
   to_port                      = 9000
   ip_protocol                  = "tcp"
 }
+resource "aws_vpc_security_group_ingress_rule" "allow_9000_ipv4_jump_host" {
+  security_group_id = aws_security_group.sonaq_sg.id
+  # cidr_ipv4         = "0.0.0.0/0"
+  referenced_security_group_id = aws_security_group.jump_host_sg.id
+  from_port                    = 9000
+  to_port                      = 9000
+  ip_protocol                  = "tcp"
+}
 resource "aws_vpc_security_group_ingress_rule" "allow_ssh_ipv4_sonaq" {
   security_group_id            = aws_security_group.sonaq_sg.id
   referenced_security_group_id = aws_security_group.jump_host_sg.id

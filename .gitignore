@@ -44,3 +44,27 @@ terraform.rc
 # planout
 
 .terraform.lock.hcl
+
+notes.txt
+
+# ansible
+
+# Ignore Ansible inventory files
+inventory.ini
+inventory_*
+# Ignore Ansible vault files
+*.vault 
+# Ignore Ansible fact cache
+fact_cache/
+# Ignore Ansible retry files
+*.retry
+# Ignore Ansible log files
+ansible.log
+ansible-*.log
+# Ignore Ansible temporary files
+.ansible/
+# Ignore Ansible configuration files
+
+
+# vs code
+settings.json
