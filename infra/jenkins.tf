@@ -25,6 +25,14 @@ resource "aws_vpc_security_group_ingress_rule" "allow_8080_ipv4_jenkins" {
   ip_protocol       = "tcp"
 }
 
+resource "aws_vpc_security_group_ingress_rule" "allow_8080_ipv4_jenkins_from_sonaqube" {
+  security_group_id            = aws_security_group.jenkins_sg.id
+  referenced_security_group_id = aws_security_group.sonaq_sg.id
+  from_port                    = 8080
+  to_port                      = 8080
+  ip_protocol                  = "tcp"
+}
+
 resource "aws_vpc_security_group_ingress_rule" "allow_ssh_ipv4_jenkins" {
   security_group_id            = aws_security_group.jenkins_sg.id
   referenced_security_group_id = aws_security_group.jump_host_sg.id
@@ -53,8 +61,8 @@ resource "aws_instance" "jenkins" {
   ]
 
   root_block_device {
-    volume_size           = 30    
-    volume_type           = "gp3" 
+    volume_size           = 30
+    volume_type           = "gp3"
     delete_on_termination = true
   }
 
