@@ -59,6 +59,12 @@ resource "aws_instance" "sonaq" {
     aws_security_group.sonaq_sg.id
   ]
 
+  root_block_device {
+    volume_size           = 20    
+    volume_type           = "gp3" 
+    delete_on_termination = true
+  }
+
   tags = {
     Name         = "${local.sonaq_key}-server"
     project_name = local.project_name

@@ -14,7 +14,7 @@ resource "aws_security_group" "jenkins_sg" {
     project_name = local.project_name
   }
 
-  
+
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_8080_ipv4_jenkins" {
@@ -51,6 +51,12 @@ resource "aws_instance" "jenkins" {
   vpc_security_group_ids = [
     aws_security_group.jenkins_sg.id,
   ]
+
+  root_block_device {
+    volume_size           = 30    
+    volume_type           = "gp3" 
+    delete_on_termination = true
+  }
 
   tags = {
     Name         = "${local.jenkins_key}-server"
