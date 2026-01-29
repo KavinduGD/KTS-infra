@@ -41,6 +41,8 @@ resource "aws_vpc_security_group_ingress_rule" "allow_5173_ipv4_depl" {
   to_port     = 5173
   ip_protocol = "tcp"
 }
+
+
 resource "aws_vpc_security_group_ingress_rule" "allow_5174_ipv4_depl" {
   security_group_id = aws_security_group.depl_sg.id
   cidr_ipv4         = "0.0.0.0/0"

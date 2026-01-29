@@ -108,6 +108,7 @@
         - compose.backend.yaml
         - compose.admin.yaml
         - compose.user.yaml
+        - .env
 
     - name: Start deploy webhook container
       ansible.builtin.command:
