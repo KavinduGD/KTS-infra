@@ -5,7 +5,7 @@ echo ">>> Backend Deploy started"
 
 cd /opt/app
 
-docker compose -f compose.backend.yaml pull
-docker compose -f compose.backend.yaml up -d --remove-orphans
+docker compose -p backend  -f compose.backend.yaml pull
+docker compose -p backend -f compose.backend.yaml up -d --build 
 
 echo ">>> Backend Deploy finished"

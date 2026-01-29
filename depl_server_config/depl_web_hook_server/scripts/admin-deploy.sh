@@ -5,7 +5,7 @@ echo ">>> Admin Deploy started"
 
 cd /opt/app
 
-docker compose -f compose.admin.yaml pull
-docker compose -f compose.admin.yaml up -d --remove-orphans
+docker compose  -p admin -f compose.admin.yaml pull
+docker compose  -p admin -f compose.admin.yaml up -d --build 
 
 echo ">>> AdminDeploy finished"
