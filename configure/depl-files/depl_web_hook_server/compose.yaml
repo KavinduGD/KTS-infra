@@ -1,0 +1,11 @@
+services:
+  deploy-webhook:
+    image: kavinduorg/kts-depl-webhook-server:latest
+    ports:
+      - "3000:3000"
+    environment:
+      DEPLOY_SECRET: super-secret-token
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/ubuntu/kts:/opt/app
+    restart: always

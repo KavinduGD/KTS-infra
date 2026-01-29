@@ -1,0 +1,7 @@
+name: kts
+
+services:
+  admin:
+    image: kavinduorg/kts-admin:latest
+    ports:
+      - 5173:80

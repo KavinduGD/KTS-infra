@@ -1,0 +1,11 @@
+name: kts
+
+services:
+  backend:
+    image: kavinduorg/kts-backend:latest
+    ports:
+      - 4000:4000
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production

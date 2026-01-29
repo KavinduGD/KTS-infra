@@ -77,3 +77,40 @@
     - name: Print Docker version
       ansible.builtin.debug:
         msg: "Docker version installed: {{ docker_version.stdout }}"
+
+    - name: Create required directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: "0755"
+      loop:
+        - /home/ubuntu/depl_web_hook_server
+        - /home/ubuntu/kts
+
+    - name: Copy webhook compose.yaml file
+      ansible.builtin.copy:
+        src: ./depl-files/depl_web_hook_server/compose.yaml
+        dest: /home/ubuntu/depl_web_hook_server/compose.yml
+        owner: ubuntu
+        group: ubuntu
+        mode: "0644"
+
+    - name: Copy KTS compose files
+      ansible.builtin.copy:
+        src: "./depl-files/kts/{{ item }}"
+        dest: "/home/ubuntu/kts/{{ item }}"
+        owner: ubuntu
+        group: ubuntu
+        mode: "0644"
+      loop:
+        - compose.backend.yaml
+        - compose.admin.yaml
+        - compose.user.yaml
+
+    - name: Start deploy webhook container
+      ansible.builtin.command:
+        cmd: docker compose up -d
+        chdir: /home/ubuntu/depl_web_hook_server
+      changed_when: false
