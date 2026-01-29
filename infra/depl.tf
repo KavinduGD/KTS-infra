@@ -17,12 +17,22 @@ resource "aws_security_group" "depl_sg" {
 
 resource "aws_vpc_security_group_ingress_rule" "allow_3000_ipv4_depl" {
   security_group_id = aws_security_group.depl_sg.id
+  # cidr_ipv4         = "0.0.0.0/0"
+  referenced_security_group_id = aws_security_group.jenkins_sg.id
+  from_port                    = 3000
+  to_port                      = 3000
+  ip_protocol                  = "tcp"
+}
+
+resource "aws_vpc_security_group_ingress_rule" "allow_4000_ipv4_depl" {
+  security_group_id = aws_security_group.depl_sg.id
   cidr_ipv4         = "0.0.0.0/0"
   #   referenced_security_group_id = aws_security_group.jenkins_sg.id
-  from_port   = 3000
-  to_port     = 3000
+  from_port   = 4000
+  to_port     = 4000
   ip_protocol = "tcp"
 }
+
 resource "aws_vpc_security_group_ingress_rule" "allow_5173_ipv4_depl" {
   security_group_id = aws_security_group.depl_sg.id
   cidr_ipv4         = "0.0.0.0/0"

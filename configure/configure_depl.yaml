@@ -9,6 +9,10 @@
       ansible.builtin.apt:
         update_cache: true
 
+    - name: Set hostname
+      ansible.builtin.hostname:
+        name: depl
+
     - name: Install required packages
       ansible.builtin.apt:
         name:

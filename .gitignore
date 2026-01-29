@@ -68,3 +68,8 @@ ansible-*.log
 
 # vs code
 settings.json
+
+
+node_modules
+/.vscode/
+.DS_Store
