@@ -78,6 +78,7 @@
       ansible.builtin.debug:
         msg: "Docker version installed: {{ docker_version.stdout }}"
 
+    #
     - name: Create required directories
       ansible.builtin.file:
         path: "{{ item }}"
@@ -115,3 +116,72 @@
         cmd: docker compose up -d
         chdir: /home/ubuntu/depl_web_hook_server
       changed_when: false
+
+    ##########################
+    # services creation #
+    ##########################
+
+    - name: Create start script
+      ansible.builtin.copy:
+        dest: /usr/local/bin/kts-start.sh
+        mode: "0755"
+        owner: root
+        group: root
+        content: |
+          #!/bin/bash
+          set -e
+
+          cd /home/ubuntu/depl_web_hook_server
+          /usr/bin/docker compose up -d
+
+          cd /home/ubuntu/kts
+          /usr/bin/docker compose -p backend -f compose.backend.yaml up -d
+          /usr/bin/docker compose -p admin -f compose.admin.yaml up -d
+          /usr/bin/docker compose -p user -f compose.user.yaml up -d
+
+    - name: Create stop script
+      ansible.builtin.copy:
+        dest: /usr/local/bin/kts-stop.sh
+        mode: "0755"
+        owner: root
+        group: root
+        content: |
+          #!/bin/bash
+
+          cd /home/ubuntu/kts
+          /usr/bin/docker compose -p user -f compose.user.yaml down
+          /usr/bin/docker compose -p admin -f compose.admin.yaml down
+          /usr/bin/docker compose -p backend -f compose.backend.yaml down
+
+          cd /home/ubuntu/depl_web_hook_server
+          /usr/bin/docker compose down
+
+    - name: Create unified systemd service
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/kts-stack.service
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=KTS Full Stack
+          Requires=docker.service
+          After=docker.service
+
+          [Service]
+          Type=oneshot
+          RemainAfterExit=true
+          ExecStart=/usr/local/bin/kts-start.sh
+          ExecStop=/usr/local/bin/kts-stop.sh
+          TimeoutStartSec=0
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Reload systemd
+      ansible.builtin.systemd_service:
+        daemon_reload: true
+
+    - name: Enable and start KTS stack
+      ansible.builtin.service:
+        name: kts-stack
+        enabled: true
+        state: started
