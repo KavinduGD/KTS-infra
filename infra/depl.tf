@@ -26,8 +26,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_3000_ipv4_depl" {
 
 resource "aws_vpc_security_group_ingress_rule" "allow_4000_ipv4_depl" {
   security_group_id = aws_security_group.depl_sg.id
-  cidr_ipv4         = "0.0.0.0/0"
-  #   referenced_security_group_id = aws_security_group.jenkins_sg.id
+  referenced_security_group_id = aws_security_group.lb_sg.id
   from_port   = 4000
   to_port     = 4000
   ip_protocol = "tcp"
@@ -35,8 +34,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_4000_ipv4_depl" {
 
 resource "aws_vpc_security_group_ingress_rule" "allow_5173_ipv4_depl" {
   security_group_id = aws_security_group.depl_sg.id
-  cidr_ipv4         = "0.0.0.0/0"
-  #   referenced_security_group_id = aws_security_group.jenkins_sg.id
+  referenced_security_group_id = aws_security_group.lb_sg.id
   from_port   = 5173
   to_port     = 5173
   ip_protocol = "tcp"
@@ -45,8 +43,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_5173_ipv4_depl" {
 
 resource "aws_vpc_security_group_ingress_rule" "allow_5174_ipv4_depl" {
   security_group_id = aws_security_group.depl_sg.id
-  cidr_ipv4         = "0.0.0.0/0"
-  #   referenced_security_group_id = aws_security_group.jenkins_sg.id
+  referenced_security_group_id = aws_security_group.lb_sg.id
   from_port   = 5174
   to_port     = 5174
   ip_protocol = "tcp"
@@ -60,13 +57,6 @@ resource "aws_vpc_security_group_ingress_rule" "allow_ssh_ipv4_depl" {
   to_port                      = 22
 }
 
-resource "aws_vpc_security_group_ingress_rule" "allow_ssh_ipv4_jump_host_jenkins_sg_depl" {
-  security_group_id            = aws_security_group.depl_sg.id
-  referenced_security_group_id = aws_security_group.jenkins_sg.id
-  from_port                    = 22
-  ip_protocol                  = "tcp"
-  to_port                      = 22
-}
 
 resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4_depl" {
   security_group_id = aws_security_group.depl_sg.id

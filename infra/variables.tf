@@ -1,8 +1,12 @@
 variable "az" {
   type        = string
-  description = "availability zone name that project hosted"
+  description = "availability zone name that main project resources hosted"
 }
 
+variable "az1" {
+  type = string
+  description = "alternative availability zone for load balancer"
+}
 
 variable "public_subnets" {
   type = map(string)
