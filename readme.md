@@ -28,13 +28,11 @@ The infrastructure is built using **Terraform** for provisioning and **Ansible**
 
 #### Network Architecture
 
-<img src="./assets/system.gif" width="1000" alt="Network Architecture">
+<img src="./assets/network.gif"   width="1000" alt="Network Architecture">
 
 #### Deployment Pipeline
 
-![Deployment Pipeline](./assets/system_design_1.png)
-
----
+## <img src="./assets/system.gif" width="1000" alt="Deployment Pipeline">
 
 ## 📂 Repository Structure
 
