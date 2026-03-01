@@ -34,6 +34,10 @@ The infrastructure is built using **Terraform** for provisioning and **Ansible**
 
 ## <img src="./assets/system.gif" width="1000" alt="Deployment Pipeline">
 
+#### CICD Pipeline
+
+<img src="./assets/cicd.gif" width="700" alt="CI/CD Pipeline">
+
 ## 📂 Repository Structure
 
 ```
